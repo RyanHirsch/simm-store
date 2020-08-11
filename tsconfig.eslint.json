@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noUnusedLocals": false
+    "noEmit": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["**/*.ts", "*.ts", "**/*.js", "*.js"],
   "exclude": ["node_modules", "dist"]
 }

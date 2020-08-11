@@ -9,8 +9,8 @@ describe("BaseStore", () => {
   it("allows updates with no subscribers", () => {
     const myStore = new BaseStore<{ name: string }>({ name: "jane" });
 
-    myStore.update((d) => {
-      d.name = "bob";
+    myStore.update((draft) => {
+      draft.name = "bob";
     });
   });
 
@@ -64,8 +64,8 @@ describe("BaseStore", () => {
     const myStore = new BaseStore<{ name: string }>({ name: "jane" });
     myStore.subscribe(mockCallback);
 
-    myStore.update((d) => {
-      d.name = "bob";
+    myStore.update((draft) => {
+      draft.name = "bob";
     });
     expect(myStore.value).toHaveProperty("name", "bob");
     expect(mockCallback.mock.calls.length).toBe(1);
@@ -98,8 +98,8 @@ describe("BaseStore", () => {
     const myStore = new BaseStore<{ name: string }>({ name: "jane" });
     myStore.subscribe(mockCallback);
 
-    myStore.update((d) => {
-      d.name = "jane";
+    myStore.update((draft) => {
+      draft.name = "jane";
     });
     myStore.update({ name: "jane" });
 
@@ -108,17 +108,18 @@ describe("BaseStore", () => {
 
   it("calls the subscribe function and can leverage structural sharing", () => {
     let subscribeCallCount = 0;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const myStore = new BaseStore<{ name: string; nested: any }>({
       name: "jane",
       nested: { value: "yeah!" },
     });
     myStore.subscribe((newVal, oldVal) => {
-      subscribeCallCount++;
+      subscribeCallCount += 1;
       expect(newVal.nested).toEqual(oldVal.nested);
     });
 
-    myStore.update((d) => {
-      d.name = "james";
+    myStore.update((draft) => {
+      draft.name = "james";
     });
     myStore.update({ name: "john" });
 

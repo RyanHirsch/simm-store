@@ -6,4 +6,9 @@ module.exports = {
     "<rootDir>/src/**/__tests__/**/*.[jt]s?(x)",
     "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)",
   ],
+  globals: {
+    "ts-jest": {
+      tsConfig: "tsconfig.jest.json",
+    },
+  },
 };
