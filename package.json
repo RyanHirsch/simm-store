@@ -1,0 +1,22 @@
+{
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "prebuild": "rimraf dist",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "immer": "^6.0.3",
+    "jsdom": "^16.2.2",
+    "json-stable-stringify": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.13.2",
+    "jest": "^25.4.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.4.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  }
+}
