@@ -1,4 +1,7 @@
 {
+  "name": "simm-store",
+  "version": "0.0.1",
+  "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
     "prettier:base": "prettier --parser typescript",
