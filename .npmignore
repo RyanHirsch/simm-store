@@ -1,0 +1,8 @@
+.eslintrc
+.lintstagedrd
+.nvmrc
+.prettierrc
+jest.config.js
+jest.setup.ts
+tsconfig.*
+yarn.lock
