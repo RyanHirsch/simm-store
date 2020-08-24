@@ -9,17 +9,17 @@ function stableKey(key: any): string {
   return typeof key === "string" ? key : stringify(key);
 }
 
-export class BaseStore<Value> {
-  private subscriptions: Map<string, Array<SubscriptionCallback<Value>>> = new Map();
+export class BaseStore<ValueT> {
+  private subscriptions: Map<string, Array<SubscriptionCallback<ValueT>>> = new Map();
 
-  private internalValue: Value;
+  private internalValue: ValueT;
 
-  constructor(initialValue: Value) {
+  constructor(initialValue: ValueT) {
     this.internalValue = initialValue;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  subscribe(subscriptionCb: SubscriptionCallback<Value>, key: any = ""): () => void {
+  subscribe(subscriptionCb: SubscriptionCallback<ValueT>, key: any = ""): () => void {
     const consistentKey = stableKey(key);
     if (!this.subscriptions.has(consistentKey)) {
       this.subscriptions.set(consistentKey, []);
@@ -31,7 +31,7 @@ export class BaseStore<Value> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  unsubscribe(subscriptionCb: SubscriptionCallback<Value>, key: any = ""): void {
+  unsubscribe(subscriptionCb: SubscriptionCallback<ValueT>, key: any = ""): void {
     const consistentKey = stableKey(key);
 
     const listeners = this.subscriptions.get(consistentKey);
@@ -43,7 +43,7 @@ export class BaseStore<Value> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  update(value?: UpdateValue<Value>, key: any = ""): void {
+  update(value?: UpdateValue<ValueT>, key: any = ""): void {
     const consistentKey = stableKey(key);
 
     const existingValue = this.internalValue;
@@ -55,7 +55,7 @@ export class BaseStore<Value> {
           : (draft) => {
               Object.assign(draft, value);
             }
-      ) as Value;
+      ) as ValueT;
 
       if (this.internalValue !== existingValue) {
         (this.subscriptions.get(consistentKey) ?? []).forEach((cb) =>
@@ -65,7 +65,7 @@ export class BaseStore<Value> {
     }
   }
 
-  public get value(): Value {
+  public get value(): ValueT {
     return this.internalValue;
   }
 }
